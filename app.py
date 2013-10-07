@@ -1,24 +1,28 @@
 import recoil_scripts
-from flask import Flask
+from apscheduler.scheduler import Scheduler
 
-app = Flask(__name__)
 
-@app.route('/update')
+sched = Scheduler()
+
+@sched.cron_schedule(hour=12, minute=0)
 def update():
     recoil_scripts.update()
 
-@app.route('/reload_database')
-def reload():
-    recoil_scripts.reload()
+sched.start()
+while True:
+    pass
 
-@app.route('/')
-def home():
-    msg = '''
-    <h1>Welcome to Recoil!</h1>
-    <p>To update, add '/update' to the end of the URL<p>
-    <p>To reload the entire database, add '/reload_database' to the end of the URL.<p>
+# def reload():
+#     recoil_scripts.reload()
 
-    </hr>
-    <p>The database will update automatically every 24 hours at noon.</p>
-    '''
-    return msg
+# @app.route('/')
+# def home():
+#     msg = '''
+#     <h1>Welcome to Recoil!</h1>
+#     <p>To update, add '/update' to the end of the URL<p>
+#     <p>To reload the entire database, add '/reload_database' to the end of the URL.<p>
+
+#     </hr>
+#     <p>The database will update automatically every 24 hours at noon.</p>
+#     '''
+#     return msg
