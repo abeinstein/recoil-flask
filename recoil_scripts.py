@@ -50,6 +50,7 @@ def update():
 
         post_to_parse(post_requests)
         # SEND PUSH NOTIFICATIONS HERE!
+        send_push_notification(latest_entries)
 
     # Now, update remaining data
     requests = []
@@ -74,6 +75,29 @@ def update():
     post_to_parse(requests)
 
 
+def send_push_notification(homicides):
+    num_people_died = len(homicides)
+    if num_people_died == 1:
+        alert = "1 person in Chicago just died due to gun violence."
+    elif num_people_died > 1:
+        alert = "%d people in Chicago just died due to gun violence."
+
+    connection = httplib.HTTPSConnection('api.parse.com', 443)
+    connection.connect()
+    connection.request('POST', '/1/push', json.dumps({
+        "where": {
+            "deviceType": "ios"
+        }, 
+        "data": {
+         "alert": alert
+       }
+     }), {
+       "X-Parse-Application-Id": "BErxVzz4caaIQP3nGgGIHGRqfNbRcSGqlQAAUqN7",
+       "X-Parse-REST-API-Key": "nTK5t1rUQceXaex9JK0XqgpEhZNU01pqJ9yq4Z58",
+       "Content-Type": "application/json"
+     })
+    result = json.loads(connection.getresponse().read())
+    return result
 
 
 
