@@ -72,6 +72,7 @@ def update():
                     requests.append(req)
                 break
 
+
     post_to_parse(requests)
 
 
@@ -80,7 +81,7 @@ def send_push_notification(homicides):
     if num_people_died == 1:
         alert = "1 person in Chicago just died due to gun violence."
     elif num_people_died > 1:
-        alert = "%d people in Chicago just died due to gun violence."
+        alert = "%d people in Chicago just died due to gun violence." % num_people_died
 
     connection = httplib.HTTPSConnection('api.parse.com', 443)
     connection.connect()
