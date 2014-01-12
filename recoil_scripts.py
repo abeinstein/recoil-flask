@@ -7,7 +7,7 @@ import urllib
 from datetime import datetime, date, time, timedelta
 from geopy import geocoders
 
-CRIME_DATA_URL = "https://spreadsheets.google.com/pub?key=0Ak3IIavLYTovdHYxbDItQ255eWh1NzBiQXp5cmxRdmc&output=csv"
+CRIME_DATA_URL = "https://spreadsheets.google.com/pub?key=0Ak3IIavLYTovdGhfeHY5VmhGaXVOVmNiWlpPdWRfWUE&output=csv"
 RELOAD_BATCH_REQUEST_COUNT = 10
 
 def get_crime_data():
@@ -167,7 +167,7 @@ def reload():
 
     If it runs into errors, this function can be called to completely refresh the database.
     '''
-    #clear_database()
+    clear_database()
     reader = get_crime_data()
 
     counter = 0
@@ -373,5 +373,5 @@ def chunks(l, n):
         yield l[i: i+n]
 
 if __name__ == "__main__":
-    reload()
+    update()
 
